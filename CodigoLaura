@@ -1,0 +1,54 @@
+import scala.util.Random
+
+object Torneo {
+
+  def main(args: Array[String]): Unit = {
+    var continuar = true
+
+    while (continuar) {
+      val equiposColombianos = List("Atlético Nacional", "Millonarios", "Independiente Santa Fe",
+        "Deportivo Cali", "Once Caldas", "Junior", "América de Cali", "Deportes Tolima")
+
+      val equipoGanadorIndex = Random.nextInt(equiposColombianos.length)
+      val equipoGanador = equiposColombianos(equipoGanadorIndex)
+
+      println("Equipos participantes: ")
+      equiposColombianos.zipWithIndex.foreach { case (equipo, index) =>
+        println(s"${index + 1}. $equipo")
+      }
+
+      println("\nSelecciona el número del equipo por el cual vas a apostar: ")
+      val apuestaEquipoIndex = scala.io.StdIn.readInt()
+
+      if (apuestaEquipoIndex >= 1 && apuestaEquipoIndex <= equiposColombianos.length) {
+        val equipoApuesta = equiposColombianos(apuestaEquipoIndex - 1)
+        println(s"Apostaste por $equipoApuesta")
+
+        println("Ingrese cuanto va a apostar: ")
+        val montoApuesta = scala.io.StdIn.readDouble()
+
+        val resultado = if (equipoApuesta == equipoGanador) {
+          montoApuesta * 2
+        } else {
+          0.0
+        }
+
+        println(s"El equipo ganador fue: $equipoGanador")
+
+        if (resultado > 0.0) {
+          println(s"Felicidades, ganaste! Tu premio es: $resultado")
+        } else {
+          println("Ha perdido, intentalo de nuevo.")
+        }
+
+        println("¿Quieres realizar otra apuesta? (s/n)")
+        val respuesta = scala.io.StdIn.readLine()
+        if (respuesta.toLowerCase != "s") {
+          continuar = false
+        }
+      } else {
+        println("Número inválido. Por favor ingresa un número entre 1 y 8.")
+      }
+    }
+  }
+}
