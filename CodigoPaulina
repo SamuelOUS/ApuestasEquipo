@@ -1,0 +1,55 @@
+import scala.util.Random
+
+class Torneo(val equipos: List[String]) {
+  def iniciar(): Unit = {
+    println("Equipos participantes:")
+    equipos.foreach(println)
+
+    val scanner = new java.util.Scanner(System.in)
+
+    var equipoElegido: String = ""
+    var equipoValido: Boolean = false
+    while (!equipoValido) {
+      println("\nIngrese el nombre del equipo en el que desea apostar:")
+      equipoElegido = scanner.nextLine()
+      if (equipos.contains(equipoElegido)) {
+        equipoValido = true
+      } else {
+        println("El equipo ingresado no está en la lista de equipos participantes. Ingrese un equipo válido.")
+      }
+    }
+
+    var pujaUsuario: Int = 0
+    var pujaValida: Boolean = false
+    while (!pujaValida) {
+      println("\nIngrese la cantidad de dinero que desea apostar:")
+      val input = scanner.nextLine()
+      if (input.forall(_.isDigit)) {
+        pujaUsuario = input.toInt
+        pujaValida = true
+      } else {
+        println("Ingrese un número válido.")
+      }
+    }
+
+    val equipoGanador = equipos(Random.nextInt(equipos.length))
+
+    println("\nEl equipo ganador es: " + equipoGanador)
+
+    if (equipoElegido.equalsIgnoreCase(equipoGanador)) {
+      val dineroGanado = pujaUsuario * 2
+      println(s"\n¡Felicidades! Has ganado la apuesta. Ganas el doble de lo apostado $dineroGanado.")
+    } else {
+      println("\nLo siento, has perdido la apuesta.")
+    }
+  }
+}
+
+object Torneo {
+  def main(args: Array[String]): Unit = {
+    val equipos = List("Barcelona", "Manchester City", "Chelsea", "Roma", "Chelsea", "Arsenal", "Milan", "PSG")
+
+    val torneo = new Torneo(equipos)
+    torneo.iniciar()
+  }
+}
