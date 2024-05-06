@@ -1,0 +1,27 @@
+import scala.io.StdIn
+import scala.util.Random
+
+object Main extends App {
+ 
+  var equipos: List[String] = List()
+
+  println("Por favor ingresa los nombres de 8 equipos (por ejemplo, rojo, azul, etc.):")
+  for (i <- 1 to 8) {
+    println(s"Ingrese el nombre del equipo $i:")
+    val nombre = StdIn.readLine()
+    equipos = nombre :: equipos
+  }
+  println("Equipos ingresados:")
+  equipos.foreach(println)
+
+  println("Elige un equipo de la lista:")
+  val equipoElegido = StdIn.readLine()
+
+  val equipoAleatorio = Random.shuffle(equipos).head
+
+  if (equipoElegido == equipoAleatorio) {
+    println("¡Felicidades! ¡Ganaste!")
+  } else {
+    println("Lo siento, no ganaste.")
+  }
+}
